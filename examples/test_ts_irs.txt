@@ -1,0 +1,133 @@
+graph(%self : __torch__.LoopProgram1,
+      %input_seq.1 : Tensor[][],
+      %lens.1 : int[],
+      %batch_size.1 : int,
+      %depth : int):
+  %9 : bool = prim::Constant[value=1]() # test.py:31:8
+  %16 : int = prim::Constant[value=0]() # test.py:35:32
+  %26 : int = prim::Constant[value=1]() # test.py:37:28
+  %141 : int = prim::Constant[value=2]() # test.py:43:12
+  %180 : int = prim::Constant[value=3]() # test.py:43:12
+  %output_i.1 : Tensor[][][] = prim::ListConstruct()
+   = prim::Loop(%batch_size.1, %9) # test.py:31:8
+    block0(%i.1 : int):
+      %output_d.1 : Tensor[][] = prim::ListConstruct()
+      %output_d1.1 : Tensor[] = prim::ListConstruct()
+      %15 : Tensor[] = aten::__getitem__(%input_seq.1, %i.1) # test.py:35:19
+      %17 : Tensor = aten::__getitem__(%15, %16) # test.py:35:19
+      %18 : __torch__.torch.nn.modules.linear.Linear = prim::GetAttr[name="cell1"](%self)
+      %19 : Tensor = prim::GetAttr[name="init_state"](%self)
+      %20 : Tensor = prim::CallMethod[name="forward"](%18, %19) # test.py:35:37
+      %prev.1 : Tensor = aten::add(%17, %20, %26) # test.py:35:19
+      %25 : Tensor[] = aten::append(%output_d1.1, %prev.1) # test.py:36:12
+      %29 : int = aten::__getitem__(%lens.1, %i.1) # test.py:37:31
+      %30 : int = aten::__range_length(%26, %29, %26) # test.py:37:12
+       = prim::Loop(%30, %9) # test.py:37:12
+        block0(%32 : int):
+          %t1.1 : int = aten::__derive_index(%32, %26, %26) # test.py:37:12
+          %36 : Tensor[] = aten::__getitem__(%input_seq.1, %i.1) # test.py:39:20
+          %38 : Tensor = aten::__getitem__(%36, %t1.1) # test.py:39:20
+          %39 : __torch__.torch.nn.modules.linear.Linear = prim::GetAttr[name="cell1"](%self)
+          %42 : int = aten::sub(%t1.1, %26) # test.py:39:60
+          %43 : Tensor = aten::__getitem__(%output_d1.1, %42) # test.py:39:50
+          %44 : Tensor = prim::CallMethod[name="forward"](%39, %43) # test.py:39:39
+          %y.1 : Tensor = aten::add(%38, %44, %26) # test.py:39:20
+          %49 : Tensor[] = aten::append(%output_d1.1, %y.1) # test.py:40:16
+          -> (%9)
+      %52 : Tensor[][] = aten::append(%output_d.1, %output_d1.1) # test.py:41:12
+      %54 : __torch__.torch.nn.modules.container.ModuleList = prim::GetAttr[name="cells"](%self)
+      %56 : __torch__.torch.nn.modules.linear.Linear = prim::GetAttr[name="0"](%54)
+      %58 : __torch__.torch.nn.modules.linear.Linear = prim::GetAttr[name="1"](%54)
+      %60 : __torch__.torch.nn.modules.linear.Linear = prim::GetAttr[name="2"](%54)
+      %62 : __torch__.torch.nn.modules.linear.Linear = prim::GetAttr[name="3"](%54)
+      %output_t.1 : Tensor[] = prim::ListConstruct()
+      %68 : Tensor[] = aten::__getitem__(%output_d.1, %16) # test.py:46:23
+      %69 : Tensor = aten::__getitem__(%68, %16) # test.py:46:23
+      %70 : __torch__.torch.nn.modules.linear.Linear = prim::GetAttr[name="cell1"](%self)
+      %71 : Tensor = prim::GetAttr[name="init_state"](%self)
+      %72 : Tensor = prim::CallMethod[name="forward"](%70, %71) # test.py:46:40
+      %prev.3 : Tensor = aten::add(%69, %72, %26) # test.py:46:23
+      %77 : Tensor[] = aten::append(%output_t.1, %prev.3) # test.py:47:16
+      %80 : int = aten::__getitem__(%lens.1, %i.1) # test.py:48:35
+      %81 : int = aten::__range_length(%26, %80, %26) # test.py:48:16
+       = prim::Loop(%81, %9) # test.py:48:16
+        block0(%83 : int):
+          %t2.1 : int = aten::__derive_index(%83, %26, %26) # test.py:48:16
+          %87 : Tensor[] = aten::__getitem__(%output_d.1, %16) # test.py:50:24
+          %89 : Tensor = aten::__getitem__(%87, %t2.1) # test.py:50:24
+          %92 : int = aten::sub(%t2.1, %26) # test.py:50:56
+          %93 : Tensor = aten::__getitem__(%output_t.1, %92) # test.py:50:47
+          %94 : Tensor = prim::CallMethod[name="forward"](%56, %93) # test.py:50:42
+          %y.3 : Tensor = aten::add(%89, %94, %26) # test.py:50:24
+          %99 : Tensor[] = aten::append(%output_t.1, %y.3) # test.py:51:20
+          -> (%9)
+      %102 : Tensor[][] = aten::append(%output_d.1, %output_t.1) # test.py:52:16
+      %output_t.6 : Tensor[] = prim::ListConstruct()
+      %106 : Tensor[] = aten::__getitem__(%output_d.1, %26) # test.py:46:23
+      %107 : Tensor = aten::__getitem__(%106, %16) # test.py:46:23
+      %108 : __torch__.torch.nn.modules.linear.Linear = prim::GetAttr[name="cell1"](%self)
+      %109 : Tensor = prim::GetAttr[name="init_state"](%self)
+      %110 : Tensor = prim::CallMethod[name="forward"](%108, %109) # test.py:46:40
+      %prev.5 : Tensor = aten::add(%107, %110, %26) # test.py:46:23
+      %115 : Tensor[] = aten::append(%output_t.6, %prev.5) # test.py:47:16
+      %118 : int = aten::__getitem__(%lens.1, %i.1) # test.py:48:35
+      %119 : int = aten::__range_length(%26, %118, %26) # test.py:48:16
+       = prim::Loop(%119, %9) # test.py:48:16
+        block0(%121 : int):
+          %t2.4 : int = aten::__derive_index(%121, %26, %26) # test.py:48:16
+          %125 : Tensor[] = aten::__getitem__(%output_d.1, %26) # test.py:50:24
+          %127 : Tensor = aten::__getitem__(%125, %t2.4) # test.py:50:24
+          %130 : int = aten::sub(%t2.4, %26) # test.py:50:56
+          %131 : Tensor = aten::__getitem__(%output_t.6, %130) # test.py:50:47
+          %132 : Tensor = prim::CallMethod[name="forward"](%58, %131) # test.py:50:42
+          %y.5 : Tensor = aten::add(%127, %132, %26) # test.py:50:24
+          %137 : Tensor[] = aten::append(%output_t.6, %y.5) # test.py:51:20
+          -> (%9)
+      %140 : Tensor[][] = aten::append(%output_d.1, %output_t.6) # test.py:52:16
+      %output_t.11 : Tensor[] = prim::ListConstruct()
+      %145 : Tensor[] = aten::__getitem__(%output_d.1, %141) # test.py:46:23
+      %146 : Tensor = aten::__getitem__(%145, %16) # test.py:46:23
+      %147 : __torch__.torch.nn.modules.linear.Linear = prim::GetAttr[name="cell1"](%self)
+      %148 : Tensor = prim::GetAttr[name="init_state"](%self)
+      %149 : Tensor = prim::CallMethod[name="forward"](%147, %148) # test.py:46:40
+      %prev.7 : Tensor = aten::add(%146, %149, %26) # test.py:46:23
+      %154 : Tensor[] = aten::append(%output_t.11, %prev.7) # test.py:47:16
+      %157 : int = aten::__getitem__(%lens.1, %i.1) # test.py:48:35
+      %158 : int = aten::__range_length(%26, %157, %26) # test.py:48:16
+       = prim::Loop(%158, %9) # test.py:48:16
+        block0(%160 : int):
+          %t2.7 : int = aten::__derive_index(%160, %26, %26) # test.py:48:16
+          %164 : Tensor[] = aten::__getitem__(%output_d.1, %141) # test.py:50:24
+          %166 : Tensor = aten::__getitem__(%164, %t2.7) # test.py:50:24
+          %169 : int = aten::sub(%t2.7, %26) # test.py:50:56
+          %170 : Tensor = aten::__getitem__(%output_t.11, %169) # test.py:50:47
+          %171 : Tensor = prim::CallMethod[name="forward"](%60, %170) # test.py:50:42
+          %y.7 : Tensor = aten::add(%166, %171, %26) # test.py:50:24
+          %176 : Tensor[] = aten::append(%output_t.11, %y.7) # test.py:51:20
+          -> (%9)
+      %179 : Tensor[][] = aten::append(%output_d.1, %output_t.11) # test.py:52:16
+      %output_t.16 : Tensor[] = prim::ListConstruct()
+      %184 : Tensor[] = aten::__getitem__(%output_d.1, %180) # test.py:46:23
+      %185 : Tensor = aten::__getitem__(%184, %16) # test.py:46:23
+      %186 : __torch__.torch.nn.modules.linear.Linear = prim::GetAttr[name="cell1"](%self)
+      %187 : Tensor = prim::GetAttr[name="init_state"](%self)
+      %188 : Tensor = prim::CallMethod[name="forward"](%186, %187) # test.py:46:40
+      %prev.9 : Tensor = aten::add(%185, %188, %26) # test.py:46:23
+      %193 : Tensor[] = aten::append(%output_t.16, %prev.9) # test.py:47:16
+      %196 : int = aten::__getitem__(%lens.1, %i.1) # test.py:48:35
+      %197 : int = aten::__range_length(%26, %196, %26) # test.py:48:16
+       = prim::Loop(%197, %9) # test.py:48:16
+        block0(%199 : int):
+          %t2.10 : int = aten::__derive_index(%199, %26, %26) # test.py:48:16
+          %203 : Tensor[] = aten::__getitem__(%output_d.1, %180) # test.py:50:24
+          %205 : Tensor = aten::__getitem__(%203, %t2.10) # test.py:50:24
+          %208 : int = aten::sub(%t2.10, %26) # test.py:50:56
+          %209 : Tensor = aten::__getitem__(%output_t.16, %208) # test.py:50:47
+          %210 : Tensor = prim::CallMethod[name="forward"](%62, %209) # test.py:50:42
+          %y.9 : Tensor = aten::add(%205, %210, %26) # test.py:50:24
+          %215 : Tensor[] = aten::append(%output_t.16, %y.9) # test.py:51:20
+          -> (%9)
+      %218 : Tensor[][] = aten::append(%output_d.1, %output_t.16) # test.py:52:16
+      %221 : Tensor[][][] = aten::append(%output_i.1, %output_d.1) # test.py:53:12
+      -> (%9)
+  return (%output_i.1)
