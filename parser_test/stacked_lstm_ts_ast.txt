@@ -1,0 +1,260 @@
+(def
+  (ident forward)
+  (decl
+    (list
+      (param
+        (ident self)
+        (option)
+        (option)
+        (False))
+      (param
+        (ident input_seq)
+        (option
+          (subscript
+            (variable (ident List))
+            (list
+              (subscript
+                (variable (ident List))
+                (list
+                  (variable
+                    (ident Tensor)))))))
+        (option)
+        (False))
+      (param
+        (ident lens)
+        (option
+          (subscript
+            (variable (ident List))
+            (list
+              (variable (ident int)))))
+        (option)
+        (False))
+      (param
+        (ident batch_size)
+        (option (variable (ident int)))
+        (option)
+        (False))
+      (param
+        (ident depth)
+        (option (variable (ident int)))
+        (option)
+        (False)))
+    (option))
+  (list
+    (assign
+      (list
+        (variable (ident output_i)))
+      (option (list-literal (list)))
+      (option
+        (subscript
+          (variable (ident List))
+          (list
+            (subscript
+              (variable (ident List))
+              (list
+                (subscript
+                  (variable
+                    (ident List))
+                  (list
+                    (variable
+                      (ident Tensor))))))))))
+    (for
+      (list (variable (ident i)))
+      (list
+        (apply
+          (variable (ident range))
+          (list
+            (variable
+              (ident batch_size)))
+          (list)))
+      (list
+        (assign
+          (list
+            (variable (ident output_j)))
+          (option
+            (list-literal (list)))
+          (option
+            (subscript
+              (variable (ident List))
+              (list
+                (subscript
+                  (variable
+                    (ident List))
+                  (list
+                    (variable
+                      (ident Tensor))))))))
+        (for
+          (list
+            (tuple-literal
+              (list
+                (variable (ident d))
+                (variable (ident cell)))))
+          (list
+            (apply
+              (variable
+                (ident enumerate))
+              (list
+                (.
+                  (variable
+                    (ident self))
+                  (ident cells)))
+              (list)))
+          (list
+            (assign
+              (list
+                (variable
+                  (ident output_k)))
+              (option
+                (list-literal (list)))
+              (option
+                (subscript
+                  (variable
+                    (ident List))
+                  (list
+                    (variable
+                      (ident Tensor))))))
+            (for
+              (list
+                (variable (ident t)))
+              (list
+                (apply
+                  (variable
+                    (ident range))
+                  (list
+                    (subscript
+                      (variable
+                        (ident lens))
+                      (list
+                        (variable
+                          (ident i)))))
+                  (list)))
+              (list
+                (if
+                  (eq
+                    (variable
+                      (ident d))
+                    (const 0))
+                  (list
+                    (assign
+                      (list
+                        (variable
+                          (ident x)))
+                      (option
+                        (subscript
+                          (subscript
+                            (variable
+                              (ident
+                                input_seq))
+                            (list
+                              (variable
+                                (ident
+                                  i))))
+                          (list
+                            (variable
+                              (ident t)))))
+                      (option)))
+                  (list
+                    (assign
+                      (list
+                        (variable
+                          (ident x)))
+                      (option
+                        (subscript
+                          (subscript
+                            (variable
+                              (ident
+                                output_j))
+                            (list
+                              (-
+                                (variable
+                                  (ident
+                                    d))
+                                (const
+                                  1))))
+                          (list
+                            (variable
+                              (ident t)))))
+                      (option))))
+                (if
+                  (eq
+                    (variable
+                      (ident t))
+                    (const 0))
+                  (list
+                    (assign
+                      (list
+                        (variable
+                          (ident
+                            h_prev)))
+                      (option
+                        (.
+                          (variable
+                            (ident
+                              self))
+                          (ident
+                            init_state)))
+                      (option)))
+                  (list
+                    (assign
+                      (list
+                        (variable
+                          (ident
+                            h_prev)))
+                      (option
+                        (subscript
+                          (variable
+                            (ident
+                              output_k))
+                          (list
+                            (unary minus
+                              (const 1)))))
+                      (option))))
+                (assign
+                  (list
+                    (variable
+                      (ident h)))
+                  (option
+                    (apply
+                      (variable
+                        (ident cell))
+                      (list
+                        (variable
+                          (ident x))
+                        (variable
+                          (ident
+                            h_prev)))
+                      (list)))
+                  (option))
+                (expression statement
+                  (apply
+                    (.
+                      (variable
+                        (ident
+                          output_k))
+                      (ident append))
+                    (list
+                      (variable
+                        (ident h)))
+                    (list)))))
+            (expression statement
+              (apply
+                (.
+                  (variable
+                    (ident output_j))
+                  (ident append))
+                (list
+                  (variable
+                    (ident output_k)))
+                (list)))))
+        (expression statement
+          (apply
+            (.
+              (variable
+                (ident output_i))
+              (ident append))
+            (list
+              (variable
+                (ident output_j)))
+            (list)))))
+    (return
+      (variable (ident output_i)))))
