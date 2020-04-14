@@ -1,0 +1,74 @@
+(def
+  (ident forward)
+  (decl
+    (list
+      (param
+        (ident self)
+        (option)
+        (option)
+        (False))
+      (param
+        (ident input)
+        (option
+          (subscript
+            (variable (ident List))
+            (list
+              (variable (ident Tensor)))))
+        (option)
+        (False))
+      (param
+        (ident batch_size)
+        (option (variable (ident int)))
+        (option)
+        (False))
+      (param
+        (ident cell)
+        (option)
+        (option)
+        (False)))
+    (option
+      (subscript
+        (variable (ident List))
+        (list
+          (variable (ident Tensor))))))
+  (list
+    (assign
+      (list (variable (ident output)))
+      (option (list-literal (list)))
+      (option
+        (subscript
+          (variable (ident List))
+          (list
+            (variable (ident Tensor))))))
+    (for
+      (list (variable (ident i)))
+      (list
+        (apply
+          (variable (ident range))
+          (list
+            (variable
+              (ident batch_size)))
+          (list)))
+      (list
+        (assign
+          (list (variable (ident x)))
+          (option
+            (apply
+              (variable (ident cell))
+              (list
+                (subscript
+                  (variable
+                    (ident input))
+                  (list
+                    (variable
+                      (ident i)))))
+              (list)))
+          (option))
+        (expression statement
+          (apply
+            (.
+              (variable (ident output))
+              (ident append))
+            (list (variable (ident x)))
+            (list)))))
+    (return (variable (ident output)))))
