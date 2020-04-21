@@ -1,0 +1,59 @@
+start: 59
+end: 262
+indent: '  '
+context: '[K, M, N] -> {  : 0 <= K <= 2147483647 and 0 <= M <= 2147483647 and 0 <=
+  N <= 2147483647 }'
+schedule: '{ domain: "[K, M, N] -> { S_1[]; S_0[i, j, k] : 0 <= i < N and 0 < j <
+  M and 0 < k < K }", child: { sequence: [ { filter: "[N, M, K] -> { S_0[i, j, k]
+  }", child: { schedule: "[N, M, K] -> L_0[{ S_0[i, j, k] -> [(i)] }]", child: { schedule:
+  "[N, M, K] -> L_1[{ S_0[i, j, k] -> [(j)] }]", child: { schedule: "[N, M, K] ->
+  L_2[{ S_0[i, j, k] -> [(k)] }]" } } } }, { filter: "[N, M, K] -> { S_1[] }" } ]
+  } }'
+arrays:
+- context: '[K, M, N] -> {  : K >= 0 and M >= 0 and N >= 0 }'
+  extent: '[K, M, N] -> { c[i0, i1, i2] : 0 <= i0 < N and 0 <= i1 < M and 0 <= i2
+    < K }'
+  element_type: int
+  element_size: 4
+statements:
+- line: 8
+  domain: '[K, M, N] -> { S_0[i, j, k] : 0 <= i < N and 0 < j < M and 0 < k < K }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[K, M, N] -> { S_0[i, j, k] -> c[(i), (j), (k)] }'
+        reference: __pet_ref_0
+        read: 0
+        write: 1
+      - type: op
+        operation: +
+        arguments:
+        - type: access
+          index: '[K, M, N] -> { S_0[i, j, k] -> c[(i), (j), (-1 + k)] }'
+          reference: __pet_ref_1
+          read: 1
+          write: 0
+        - type: access
+          index: '[K, M, N] -> { S_0[i, j, k] -> c[(i), (-1 + j), (k)] }'
+          reference: __pet_ref_2
+          read: 1
+          write: 0
+- line: -1
+  domain: '[K, M, N] -> { S_1[] }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: kill
+      arguments:
+      - type: access
+        killed: '[K, M, N] -> { S_1[] -> c[o0, o1, o2] : 0 <= o0 < N and 0 <= o1 <
+          M and 0 <= o2 < K }'
+        index: '[K, M, N] -> { S_1[] -> c[] }'
+        depth: 3
+        reference: __pet_ref_3
+        kill: 1
