@@ -1,0 +1,343 @@
+==========begin dump tree=============
+
+block
+line: 11
+start: 350
+end: 865
+block: 0
+  for
+  line: 11
+  start: 350
+  end: 865
+  declared: 1
+  var:
+    index: { [] -> i[] }
+    depth: 0
+    read: 0
+    write: 1
+  init:
+    0
+  inc:
+    1
+  condition:
+    op: <
+    args:
+    - index: { [] -> i[] }
+      depth: 0
+      read: 1
+      write: 0
+    - index: { [] -> batch_size[] }
+      depth: 0
+      read: 1
+      write: 0
+  body:
+    block
+    line: 11
+    start: 389
+    end: 865
+    block: 1
+      declaration-init
+      line: 12
+      start: 391
+      end: 421
+      var:
+        index: { [] -> seq_len[] }
+        depth: 0
+        read: 0
+        write: 1
+      init:
+        index: { [[] -> [i0]] -> seq_lens[((i0) : i0 >= 0)] }
+        depth: 1
+        read: 1
+        write: 0
+        args:
+        - index: { [] -> i[] }
+          depth: 0
+          read: 1
+          write: 0
+      for
+      line: 13
+      start: 422
+      end: 861
+      declared: 1
+      var:
+        index: { [] -> j[] }
+        depth: 0
+        read: 0
+        write: 1
+      init:
+        0
+      inc:
+        1
+      condition:
+        op: <
+        args:
+        - index: { [] -> j[] }
+          depth: 0
+          read: 1
+          write: 0
+        - index: { [] -> seq_len[] }
+          depth: 0
+          read: 1
+          write: 0
+      body:
+        block
+        line: 13
+        start: 460
+        end: 861
+        block: 1
+          for
+          line: 14
+          start: 462
+          end: 855
+          declared: 1
+          var:
+            index: { [] -> k[] }
+            depth: 0
+            read: 0
+            write: 1
+          init:
+            0
+          inc:
+            1
+          condition:
+            op: <
+            args:
+            - index: { [] -> k[] }
+              depth: 0
+              read: 1
+              write: 0
+            - index: { [] -> depth[] }
+              depth: 0
+              read: 1
+              write: 0
+          body:
+            block
+            line: 14
+            start: 500
+            end: 855
+            block: 1
+              declaration-init
+              line: 15
+              start: 502
+              end: 528
+              var:
+                index: { [] -> h_prev[] }
+                depth: 0
+                read: 0
+                write: 1
+              init:
+                0.              if-else
+              line: 16
+              start: 529
+              end: 648
+              condition:
+                op: ==
+                args:
+                - index: { [] -> j[] }
+                  depth: 0
+                  read: 1
+                  write: 0
+                - 0
+              then:
+                block
+                line: 16
+                start: 549
+                end: 591
+                block: 1
+                  expression
+                  line: 17
+                  start: 551
+                  end: 582
+                  op: =
+                  args:
+                  - index: { [] -> h_prev[] }
+                    depth: 0
+                    read: 0
+                    write: 1
+                  - index: { [] -> init_state[] }
+                    depth: 0
+                    read: 1
+                    write: 0
+              else:
+                block
+                line: 18
+                start: 597
+                end: 648
+                block: 1
+                  expression
+                  line: 19
+                  start: 599
+                  end: 639
+                  op: =
+                  args:
+                  - index: { [] -> h_prev[] }
+                    depth: 0
+                    read: 0
+                    write: 1
+                  - index: { [[] -> [i0, i1, i2]] -> output[((i0) : i0 >= 0), ((i1) : i1 >= 0), ((i2) : i2 >= 0)] }
+                    depth: 3
+                    read: 1
+                    write: 0
+                    args:
+                    - index: { [] -> i[] }
+                      depth: 0
+                      read: 1
+                      write: 0
+                    - op: -
+                      args:
+                      - index: { [] -> j[] }
+                        depth: 0
+                        read: 1
+                        write: 0
+                      - 1
+                    - index: { [] -> k[] }
+                      depth: 0
+                      read: 1
+                      write: 0
+              declaration-init
+              line: 22
+              start: 650
+              end: 671
+              var:
+                index: { [] -> x[] }
+                depth: 0
+                read: 0
+                write: 1
+              init:
+                0.              if-else
+              line: 23
+              start: 672
+              end: 782
+              condition:
+                op: ==
+                args:
+                - index: { [] -> k[] }
+                  depth: 0
+                  read: 1
+                  write: 0
+                - 0
+              then:
+                block
+                line: 23
+                start: 692
+                end: 730
+                block: 1
+                  expression
+                  line: 24
+                  start: 694
+                  end: 721
+                  op: =
+                  args:
+                  - index: { [] -> x[] }
+                    depth: 0
+                    read: 0
+                    write: 1
+                  - index: { [[] -> [i0, i1]] -> input[((i0) : i0 >= 0), ((i1) : i1 >= 0)] }
+                    depth: 2
+                    read: 1
+                    write: 0
+                    args:
+                    - index: { [] -> i[] }
+                      depth: 0
+                      read: 1
+                      write: 0
+                    - index: { [] -> j[] }
+                      depth: 0
+                      read: 1
+                      write: 0
+              else:
+                block
+                line: 25
+                start: 736
+                end: 782
+                block: 1
+                  expression
+                  line: 26
+                  start: 738
+                  end: 773
+                  op: =
+                  args:
+                  - index: { [] -> x[] }
+                    depth: 0
+                    read: 0
+                    write: 1
+                  - index: { [[] -> [i0, i1, i2]] -> output[((i0) : i0 >= 0), ((i1) : i1 >= 0), ((i2) : i2 >= 0)] }
+                    depth: 3
+                    read: 1
+                    write: 0
+                    args:
+                    - index: { [] -> i[] }
+                      depth: 0
+                      read: 1
+                      write: 0
+                    - index: { [] -> j[] }
+                      depth: 0
+                      read: 1
+                      write: 0
+                    - op: -
+                      args:
+                      - index: { [] -> k[] }
+                        depth: 0
+                        read: 1
+                        write: 0
+                      - 1
+              declaration-init
+              line: 29
+              start: 784
+              end: 818
+              var:
+                index: { [] -> h[] }
+                depth: 0
+                read: 0
+                write: 1
+              init:
+                call: cell/2
+                args:
+                - index: { [] -> x[] }
+                  depth: 0
+                  read: 1
+                  write: 0
+                - index: { [] -> h_prev[] }
+                  depth: 0
+                  read: 1
+                  write: 0
+                summary
+                - other other
+              expression
+              line: 30
+              start: 819
+              end: 848
+              op: =
+              args:
+              - index: { [[] -> [i0, i1, i2]] -> output[((i0) : i0 >= 0), ((i1) : i1 >= 0), ((i2) : i2 >= 0)] }
+                depth: 3
+                read: 0
+                write: 1
+                args:
+                - index: { [] -> i[] }
+                  depth: 0
+                  read: 1
+                  write: 0
+                - index: { [] -> j[] }
+                  depth: 0
+                  read: 1
+                  write: 0
+                - index: { [] -> k[] }
+                  depth: 0
+                  read: 1
+                  write: 0
+              - index: { [] -> h[] }
+                depth: 0
+                read: 1
+                write: 0
+==========end dump tree=============
+
+==========begin dump context=============
+
+domain: { [] }
+assignments: {max_seq_len@0xb7e590: [max_seq_len] -> { [] -> [(max_seq_len)] }, depth@0xb7e510: [depth] -> { [] -> [(depth)] }, batch_size@0xb7d8d8: [batch_size] -> { [] -> [(batch_size)] }}
+nesting allowed: 0
+
+
+==========end dump context=============

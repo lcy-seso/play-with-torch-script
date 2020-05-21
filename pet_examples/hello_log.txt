@@ -1,0 +1,55 @@
+==========dump tree before extract scop=============
+
+block
+line: 3
+start: 43
+end: 94
+block: 0
+  for
+  line: 3
+  start: 43
+  end: 94
+  declared: 1
+  var:
+    index: { [] -> i[] }
+    depth: 0
+    read: 0
+    write: 1
+  init:
+    0  inc:
+    1  condition:
+    op: <
+    args:
+    - index: { [] -> i[] }
+      depth: 0
+      read: 1
+      write: 0
+    - index: { [] -> N[] }
+      depth: 0
+      read: 1
+      write: 0
+  body:
+    block
+    line: 3
+    start: 73
+    end: 94
+    block: 1
+      expression
+      line: 4
+      start: 75
+      end: 91
+      op: *=
+      args:
+      - index: { [[] -> [i0]] -> A[((i0) : i0 >= 0)] }
+        depth: 1
+        read: 1
+        write: 1
+        args:
+        - index: { [] -> i[] }
+          depth: 0
+          read: 1
+          write: 0
+      - 5.
+
+
+==========end dump=============
