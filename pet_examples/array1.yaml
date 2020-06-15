@@ -1,0 +1,31 @@
+start: 79
+end: 209
+indent: '  '
+context: '[len] -> {  : -2147483648 <= len <= 2147483644 }'
+schedule: '{ domain: "[len] -> { S_0[i, j] : 0 <= i < len and 0 <= j <= 4 }", child:
+  { schedule: "[len] -> L_0[{ S_0[i, j] -> [(i)] }]", child: { schedule: "[len] ->
+  L_1[{ S_0[i, j] -> [(j)] }]" } } }'
+arrays:
+- context: '{  :  }'
+  extent: '[len] -> { B[i0, i1] : i0 >= 0 and 0 <= i1 <= 4 }'
+  element_type: int
+  element_size: 4
+statements:
+- line: 10
+  domain: '[len] -> { S_0[i, j] : 0 <= i < len and 0 <= j <= 4 }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[len] -> { S_0[i, j] -> B[(i), (j)] }'
+        reference: __pet_ref_0
+        read: 0
+        write: 1
+      - type: access
+        index: '[len] -> { S_0[i, j] -> [(i + j)] }'
+        reference: __pet_ref_1
+        read: 1
+        write: 0

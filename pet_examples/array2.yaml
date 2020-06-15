@@ -1,0 +1,48 @@
+start: 83
+end: 227
+indent: '  '
+context: '[len] -> {  : 0 <= len <= 2147483644 }'
+schedule: '{ domain: "[len] -> { S_0[]; S_1[i, j] : 0 <= i < len and 0 <= j <= 4 }",
+  child: { sequence: [ { filter: "[len] -> { S_0[] }" }, { filter: "[len] -> { S_1[i,
+  j] }", child: { schedule: "[len] -> L_0[{ S_1[i, j] -> [(i)] }]", child: { schedule:
+  "[len] -> L_1[{ S_1[i, j] -> [(j)] }]" } } } ] } }'
+arrays:
+- context: '[len] -> {  : len >= 0 }'
+  extent: '[len] -> { B[i0, i1] : 0 <= i0 < len and 0 <= i1 <= 4 }'
+  element_type: int
+  element_size: 4
+  declared: 1
+  exposed: 1
+statements:
+- line: 9
+  domain: '[len] -> { S_0[] }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: kill
+      arguments:
+      - type: access
+        killed: '[len] -> { S_0[] -> B[o0, o1] : 0 <= o0 < len and 0 <= o1 <= 4 }'
+        index: '[len] -> { S_0[] -> B[] }'
+        depth: 2
+        reference: __pet_ref_0
+        kill: 1
+- line: 13
+  domain: '[len] -> { S_1[i, j] : 0 <= i < len and 0 <= j <= 4 }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[len] -> { S_1[i, j] -> B[(i), (j)] }'
+        reference: __pet_ref_1
+        read: 0
+        write: 1
+      - type: access
+        index: '[len] -> { S_1[i, j] -> [(i + j)] }'
+        reference: __pet_ref_2
+        read: 1
+        write: 0

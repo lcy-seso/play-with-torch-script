@@ -1,0 +1,96 @@
+start: 110
+end: 271
+indent: '  '
+context: '{  :  }'
+schedule: '{ domain: "{ S_0[]; S_3[i, j] : 0 <= i <= 6 and 0 <= j <= 4; S_2[]; S_1[]
+  }", child: { sequence: [ { filter: "{ S_0[] }" }, { filter: "{ S_1[] }" }, { filter:
+  "{ S_2[] }" }, { filter: "{ S_3[i, j] }", child: { schedule: "L_0[{ S_3[i, j] ->
+  [(i)] }]", child: { schedule: "L_1[{ S_3[i, j] -> [(j)] }]" } } } ] } }'
+types:
+- name: A5
+  definition: typedef int A5[5]
+- name: SA
+  definition: "typedef struct SA {\n    A5 b;\n    float f;\n} SA"
+arrays:
+- context: '{  :  }'
+  extent: '{ len[] }'
+  element_type: int
+  element_size: 4
+  declared: 1
+  exposed: 1
+- context: '{  :  }'
+  extent: '{ B[i0] : 0 <= i0 <= 6 }'
+  element_type: struct SA
+  element_size: 24
+  element_is_record: 1
+  declared: 1
+  exposed: 1
+- context: '{  :  }'
+  extent: '{ B_b[B[i0] -> b[i1]] : i0 >= 0 and 0 <= i1 <= 4 }'
+  element_type: int
+  element_size: 4
+- context: '{  :  }'
+  extent: '{ B_f[B[i0] -> f[]] : i0 >= 0 }'
+  element_type: float
+  element_size: 4
+statements:
+- line: 13
+  domain: '{ S_0[] }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: kill
+      arguments:
+      - type: access
+        killed: '{ S_0[] -> len[] }'
+        index: '{ S_0[] -> len[] }'
+        reference: __pet_ref_0
+        kill: 1
+- line: 13
+  domain: '{ S_1[] }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '{ S_1[] -> len[] }'
+        reference: __pet_ref_1
+        read: 0
+        write: 1
+      - type: int
+        value: 7
+- line: 14
+  domain: '{ S_2[] }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: kill
+      arguments:
+      - type: access
+        killed: '{ S_2[] -> B[o0] : 0 <= o0 <= 6 }'
+        index: '{ S_2[] -> B[] }'
+        depth: 1
+        reference: __pet_ref_2
+        kill: 1
+- line: 18
+  domain: '{ S_3[i, j] : 0 <= i <= 6 and 0 <= j <= 4 }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '{ S_3[i, j] -> B_b[B[(i)] -> b[(j)]] }'
+        reference: __pet_ref_3
+        read: 0
+        write: 1
+      - type: access
+        index: '{ S_3[i, j] -> [(i + j)] }'
+        reference: __pet_ref_4
+        read: 1
+        write: 0
