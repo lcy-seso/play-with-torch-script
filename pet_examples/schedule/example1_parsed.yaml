@@ -1,0 +1,56 @@
+start: 26
+end: 183
+indent: '  '
+context: '{  :  }'
+schedule: '{ domain: "{ S_0[i] : 0 <= i <= 4; S_1[i, j] : 0 <= i <= 4 and 0 < j <=
+  6 }", child: { schedule: "L_0[{ S_0[i] -> [(i)]; S_1[i, j] -> [(i)] }]", child:
+  { sequence: [ { filter: "{ S_0[i] }" }, { filter: "{ S_1[i, j] }", child: { schedule:
+  "L_1[{ S_1[i, j] -> [(j)] }]" } } ] } } }'
+arrays:
+- context: '{  :  }'
+  extent: '{ A[i0, i1] : i0 >= 0 and 0 <= i1 <= 6 }'
+  element_type: float
+  element_size: 4
+statements:
+- line: 4
+  domain: '{ S_0[i] : 0 <= i <= 4 }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '{ S_0[i] -> A[(i), (0)] }'
+        reference: __pet_ref_0
+        read: 0
+        write: 1
+      - type: double
+        value: 0.5
+        string: 0.5
+- line: 6
+  domain: '{ S_1[i, j] : 0 <= i <= 4 and 0 < j <= 6 }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '{ S_1[i, j] -> A[(i), (j)] }'
+        reference: __pet_ref_1
+        read: 0
+        write: 1
+      - type: op
+        operation: +
+        arguments:
+        - type: access
+          index: '{ S_1[i, j] -> A[(i), (-1 + j)] }'
+          reference: __pet_ref_2
+          read: 1
+          write: 0
+        - type: access
+          index: '{ S_1[i, j] -> [(j)] }'
+          reference: __pet_ref_3
+          read: 1
+          write: 0
