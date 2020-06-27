@@ -1,0 +1,669 @@
+start: 513
+end: 1611
+indent: '  '
+context: '[depth, max_seq_len, batch_size] -> {  : 0 <= depth <= 2147483647 and 0
+  <= max_seq_len <= 2147483647 and -2147483648 <= batch_size <= 2147483647 }'
+schedule: '{ domain: "[depth, max_seq_len, batch_size] -> { S_6[i, j] : 0 <= i < batch_size
+  and 0 <= j < depth; S_2[i, j, k] : 0 <= i < batch_size and 0 < j < depth and k >=
+  0; S_4[i, j, k] : 0 <= i < batch_size and 0 <= j < depth and k > 0; S_0[i, j] :
+  0 <= i < batch_size and 0 <= j < depth; S_11[i, j, t] : 0 <= i < batch_size and
+  0 <= j < depth and t >= 0; S_1[i, j = 0, k] : depth > 0 and 0 <= i < batch_size
+  and k >= 0; S_17[]; S_16[i, j, n] : 0 <= i < batch_size and 0 <= j < depth and n
+  >= 0; S_9[i, j, t] : 0 <= i < batch_size and 0 < j < depth and t >= 0; S_8[i, j
+  = 0, t] : depth > 0 and 0 <= i < batch_size and t >= 0; S_3[i, j, k = 0] : 0 <=
+  i < batch_size and 0 <= j < depth; S_19[]; S_15[i, j] : 0 <= i < batch_size and
+  0 <= j < depth; S_14[i, j] : 0 <= i < batch_size and 0 <= j < depth; S_10[i, j,
+  t] : 0 <= i < batch_size and 0 <= j < depth and t >= 0; S_13[i, j, t] : 0 <= i <
+  batch_size and 0 <= j < depth and t >= 0; S_5[i, j, k] : 0 <= i < batch_size and
+  0 <= j < depth and k >= 0; S_18[]; S_12[i, j, t] : 0 <= i < batch_size and 0 <=
+  j < depth and t >= 0; S_7[i, j, t] : 0 <= i < batch_size and 0 <= j < depth and
+  t >= 0 }", child: { sequence: [ { filter: "[batch_size, depth] -> { S_7[i, j, t];
+  S_2[i, j, k]; S_16[i, j, n]; S_4[i, j, k]; S_13[i, j, t]; S_6[i, j]; S_15[i, j];
+  S_9[i, j, t]; S_10[i, j, t]; S_8[i, j, t]; S_1[i, j, k]; S_3[i, j, k]; S_11[i, j,
+  t]; S_12[i, j, t]; S_14[i, j]; S_5[i, j, k]; S_0[i, j] }", child: { schedule: "[batch_size,
+  depth] -> L_0[{ S_7[i, j, t] -> [(i)]; S_2[i, j, k] -> [(i)]; S_16[i, j, n] -> [(i)];
+  S_4[i, j, k] -> [(i)]; S_13[i, j, t] -> [(i)]; S_6[i, j] -> [(i)]; S_15[i, j] ->
+  [(i)]; S_9[i, j, t] -> [(i)]; S_10[i, j, t] -> [(i)]; S_8[i, j, t] -> [(i)]; S_1[i,
+  j, k] -> [(i)]; S_3[i, j, k] -> [(i)]; S_11[i, j, t] -> [(i)]; S_12[i, j, t] ->
+  [(i)]; S_14[i, j] -> [(i)]; S_5[i, j, k] -> [(i)]; S_0[i, j] -> [(i)] }]", child:
+  { schedule: "[batch_size, depth] -> L_1[{ S_7[i, j, t] -> [(j)]; S_2[i, j, k] ->
+  [(j)]; S_16[i, j, n] -> [(j)]; S_4[i, j, k] -> [(j)]; S_13[i, j, t] -> [(j)]; S_6[i,
+  j] -> [(j)]; S_15[i, j] -> [(j)]; S_9[i, j, t] -> [(j)]; S_10[i, j, t] -> [(j)];
+  S_8[i, j, t] -> [(j)]; S_1[i, j, k] -> [(j)]; S_3[i, j, k] -> [(j)]; S_11[i, j,
+  t] -> [(j)]; S_12[i, j, t] -> [(j)]; S_14[i, j] -> [(j)]; S_5[i, j, k] -> [(j)];
+  S_0[i, j] -> [(j)] }]", child: { sequence: [ { filter: "[batch_size, depth] -> {
+  S_0[i, j] }" }, { filter: "[batch_size, depth] -> { S_2[i, j, k]; S_4[i, j, k];
+  S_1[i, j, k]; S_3[i, j, k]; S_5[i, j, k] }", child: { schedule: "[batch_size, depth]
+  -> L_2[{ S_2[i, j, k] -> [(k)]; S_4[i, j, k] -> [(k)]; S_1[i, j, k] -> [(k)]; S_3[i,
+  j, k] -> [(k)]; S_5[i, j, k] -> [(k)] }]", child: { sequence: [ { filter: "[batch_size,
+  depth] -> { S_2[i, j, k]; S_1[i, j, k] }", child: { set: [ { filter: "[batch_size,
+  depth] -> { S_1[i, j, k] }" }, { filter: "[batch_size, depth] -> { S_2[i, j, k]
+  }" } ] } }, { filter: "[batch_size, depth] -> { S_4[i, j, k]; S_3[i, j, k] }", child:
+  { set: [ { filter: "[batch_size, depth] -> { S_3[i, j, k] }" }, { filter: "[batch_size,
+  depth] -> { S_4[i, j, k] }" } ] } }, { filter: "[batch_size, depth] -> { S_5[i,
+  j, k] }" } ] } } }, { filter: "[batch_size, depth] -> { S_14[i, j] }" }, { filter:
+  "[batch_size, depth] -> { S_6[i, j] }" }, { filter: "[batch_size, depth] -> { S_7[i,
+  j, t]; S_13[i, j, t]; S_9[i, j, t]; S_10[i, j, t]; S_8[i, j, t]; S_11[i, j, t];
+  S_12[i, j, t] }", child: { schedule: "[batch_size, depth] -> L_3[{ S_7[i, j, t]
+  -> [(t)]; S_13[i, j, t] -> [(t)]; S_9[i, j, t] -> [(t)]; S_10[i, j, t] -> [(t)];
+  S_8[i, j, t] -> [(t)]; S_11[i, j, t] -> [(t)]; S_12[i, j, t] -> [(t)] }]", child:
+  { sequence: [ { filter: "[batch_size, depth] -> { S_7[i, j, t] }" }, { filter: "[batch_size,
+  depth] -> { S_9[i, j, t]; S_8[i, j, t] }", child: { set: [ { filter: "[batch_size,
+  depth] -> { S_8[i, j, t] }" }, { filter: "[batch_size, depth] -> { S_9[i, j, t]
+  }" } ] } }, { filter: "[batch_size, depth] -> { S_10[i, j, t]; S_11[i, j, t] }",
+  child: { set: [ { filter: "[batch_size, depth] -> { S_10[i, j, t] }" }, { filter:
+  "[batch_size, depth] -> { S_11[i, j, t] }" } ] } }, { filter: "[batch_size, depth]
+  -> { S_12[i, j, t] }" }, { filter: "[batch_size, depth] -> { S_13[i, j, t] }" }
+  ] } } }, { filter: "[batch_size, depth] -> { S_15[i, j] }" }, { filter: "[batch_size,
+  depth] -> { S_16[i, j, n] }", child: { schedule: "[batch_size, depth] -> L_4[{ S_16[i,
+  j, n] -> [(n)] }]" } } ] } } } }, { filter: "[batch_size, depth] -> { S_19[]; S_17[];
+  S_18[] }", child: { set: [ { filter: "{ S_17[] }" }, { filter: "{ S_18[] }" }, {
+  filter: "{ S_19[] }" } ] } } ] } }'
+arrays:
+- context: '{  :  }'
+  extent: '[depth, max_seq_len, batch_size] -> { __pet_test_0[i, j, t] : 0 <= i <
+    batch_size and 0 <= j < depth and t >= 0 }'
+  value_bounds: '{ [i0] : 0 <= i0 <= 1 }'
+  element_type: int
+  element_size: 4
+  uniquely_defined: 1
+- context: '{  :  }'
+  extent: '[depth, max_seq_len, batch_size] -> { k[] }'
+  element_type: int
+  element_size: 4
+  declared: 1
+- context: '{  :  }'
+  extent: '[depth, max_seq_len, batch_size] -> { h_prev[] }'
+  element_type: float
+  element_size: 4
+- context: '[max_seq_len] -> {  : max_seq_len >= 0 }'
+  extent: '[depth, max_seq_len, batch_size] -> { input[i0, i1] : i0 >= 0 and 0 <=
+    i1 < max_seq_len }'
+  element_type: float
+  element_size: 4
+- context: '[depth, max_seq_len] -> {  : depth >= 0 and max_seq_len >= 0 }'
+  extent: '[depth, max_seq_len, batch_size] -> { output[i0, i1, i2] : i0 >= 0 and
+    0 <= i1 < max_seq_len and 0 <= i2 < depth }'
+  element_type: float
+  element_size: 4
+- context: '[depth, max_seq_len] -> {  : depth >= 0 and max_seq_len >= 0 }'
+  extent: '[depth, max_seq_len, batch_size] -> { output1[i0, i1, i2] : i0 >= 0 and
+    0 <= i1 < max_seq_len and 0 <= i2 < depth }'
+  element_type: float
+  element_size: 4
+- context: '[depth, max_seq_len] -> {  : depth >= 0 and max_seq_len >= 0 }'
+  extent: '[depth, max_seq_len, batch_size] -> { output2[i0, i1, i2] : i0 >= 0 and
+    0 <= i1 < max_seq_len and 0 <= i2 < depth }'
+  element_type: float
+  element_size: 4
+- context: '{  :  }'
+  extent: '[depth, max_seq_len, batch_size] -> { seq_len[] }'
+  element_type: int
+  element_size: 4
+- context: '{  :  }'
+  extent: '[depth, max_seq_len, batch_size] -> { seq_lens[i0] : i0 >= 0 }'
+  element_type: int
+  element_size: 4
+- context: '{  :  }'
+  extent: '[depth, max_seq_len, batch_size] -> { x[] }'
+  element_type: float
+  element_size: 4
+statements:
+- line: 21
+  domain: '[depth, max_seq_len, batch_size] -> { S_0[i, j] : 0 <= i < batch_size and
+    0 <= j < depth }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_0[i, j] -> seq_len[] }'
+        reference: __pet_ref_0
+        read: 0
+        write: 1
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_0[i, j] -> seq_lens[(i)] }'
+        reference: __pet_ref_1
+        read: 1
+        write: 0
+- line: 24
+  domain: '[depth, max_seq_len, batch_size] -> { [S_1[i, j = 0, k] -> [seq_len]] :
+    depth > 0 and 0 <= i < batch_size and k >= 0 and seq_len > k }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_1[i, j, k] -> x[] }'
+        reference: __pet_ref_3
+        read: 0
+        write: 1
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_1[i, j, k] -> input[(i), (k)]
+          }'
+        reference: __pet_ref_4
+        read: 1
+        write: 0
+  arguments:
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_1[i, j, k] -> seq_len[] }'
+    reference: __pet_ref_2
+    read: 1
+    write: 0
+- line: 26
+  domain: '[depth, max_seq_len, batch_size] -> { [S_2[i, j, k] -> [seq_len]] : 0 <=
+    i < batch_size and 0 < j < depth and k >= 0 and seq_len > k }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_2[i, j, k] -> x[] }'
+        reference: __pet_ref_6
+        read: 0
+        write: 1
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_2[i, j, k] -> output1[(i),
+          (k), (-1 + j)] }'
+        reference: __pet_ref_7
+        read: 1
+        write: 0
+  arguments:
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_2[i, j, k] -> seq_len[] }'
+    reference: __pet_ref_5
+    read: 1
+    write: 0
+- line: 30
+  domain: '[depth, max_seq_len, batch_size] -> { [S_3[i, j, k = 0] -> [seq_len]] :
+    0 <= i < batch_size and 0 <= j < depth and seq_len > 0 }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_3[i, j, k] -> h_prev[] }'
+        reference: __pet_ref_9
+        read: 0
+        write: 1
+      - type: double
+        value: 0
+        string: 0.
+  arguments:
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_3[i, j, k] -> seq_len[] }'
+    reference: __pet_ref_8
+    read: 1
+    write: 0
+- line: 32
+  domain: '[depth, max_seq_len, batch_size] -> { [S_4[i, j, k] -> [seq_len]] : 0 <=
+    i < batch_size and 0 <= j < depth and k > 0 and seq_len > k }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_4[i, j, k] -> h_prev[] }'
+        reference: __pet_ref_11
+        read: 0
+        write: 1
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_4[i, j, k] -> output1[((i)
+          : k <= 2147483648), ((-1 + k) : k <= 2147483648), ((j) : k <= 2147483648)]
+          }'
+        reference: __pet_ref_12
+        read: 1
+        write: 0
+  arguments:
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_4[i, j, k] -> seq_len[] }'
+    reference: __pet_ref_10
+    read: 1
+    write: 0
+- line: 36
+  domain: '[depth, max_seq_len, batch_size] -> { [S_5[i, j, k] -> [seq_len]] : 0 <=
+    i < batch_size and 0 <= j < depth and k >= 0 and seq_len > k }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_5[i, j, k] -> output1[(i),
+          (k), (j)] }'
+        reference: __pet_ref_14
+        read: 0
+        write: 1
+      - type: call
+        name: cell
+        arguments:
+        - type: access
+          index: '[depth, max_seq_len, batch_size] -> { S_5[i, j, k] -> h_prev[] }'
+          reference: __pet_ref_15
+          read: 1
+          write: 0
+        - type: access
+          index: '[depth, max_seq_len, batch_size] -> { S_5[i, j, k] -> x[] }'
+          reference: __pet_ref_16
+          read: 1
+          write: 0
+  arguments:
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_5[i, j, k] -> seq_len[] }'
+    reference: __pet_ref_13
+    read: 1
+    write: 0
+- line: 39
+  domain: '[depth, max_seq_len, batch_size] -> { S_14[i, j] : 0 <= i < batch_size
+    and 0 <= j < depth }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: kill
+      arguments:
+      - type: access
+        killed: '[depth, max_seq_len, batch_size] -> { S_14[i, j] -> k[] }'
+        index: '[depth, max_seq_len, batch_size] -> { S_14[i, j] -> k[] }'
+        reference: __pet_ref_17
+        kill: 1
+- line: 39
+  domain: '[depth, max_seq_len, batch_size] -> { S_6[i, j] : 0 <= i < batch_size and
+    0 <= j < depth }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_6[i, j] -> k[] }'
+        reference: __pet_ref_18
+        read: 0
+        write: 1
+      - type: op
+        operation: '-'
+        arguments:
+        - type: access
+          index: '[depth, max_seq_len, batch_size] -> { S_6[i, j] -> seq_len[] }'
+          reference: __pet_ref_19
+          read: 1
+          write: 0
+        - type: int
+          value: 1
+- line: 39
+  domain: '[depth, max_seq_len, batch_size] -> { [S_7[i, j, t] -> [__pet_test_0 =
+    1]] : 0 <= i < batch_size and 0 <= j < depth and t >= 0 }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_7[i, j, t] -> __pet_test_0[(i),
+          (j), (t)] }'
+        reference: __pet_ref_21
+        read: 0
+        write: 1
+      - type: op
+        operation: '>='
+        arguments:
+        - type: access
+          index: '[depth, max_seq_len, batch_size] -> { S_7[i, j, t] -> k[] }'
+          reference: __pet_ref_22
+          read: 1
+          write: 0
+        - type: int
+          value: 0
+  arguments:
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_7[i, j, t] -> __pet_test_0[(i),
+      (j), ((-1 + t) : t > 0)] }'
+    reference: __pet_ref_20
+    read: 1
+    write: 0
+- line: 41
+  domain: '[depth, max_seq_len, batch_size] -> { [S_8[i, j = 0, t] -> [__pet_test_0
+    = 1]] : depth > 0 and 0 <= i < batch_size and t >= 0 }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_8[i, j, t] -> x[] }'
+        reference: __pet_ref_24
+        read: 0
+        write: 1
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { [S_8[i, j, t] -> [i3]] -> input[(i),
+          ((i3) : i3 >= 0)] }'
+        reference: __pet_ref_27
+        read: 1
+        write: 0
+        arguments:
+        - type: op
+          operation: '-'
+          arguments:
+          - type: access
+            index: '[depth, max_seq_len, batch_size] -> { S_8[i, j, t] -> seq_len[]
+              }'
+            reference: __pet_ref_25
+            read: 1
+            write: 0
+          - type: access
+            index: '[depth, max_seq_len, batch_size] -> { S_8[i, j, t] -> k[] }'
+            reference: __pet_ref_26
+            read: 1
+            write: 0
+  arguments:
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_8[i, j, t] -> __pet_test_0[(i),
+      (0), (t)] }'
+    reference: __pet_ref_23
+    read: 1
+    write: 0
+- line: 43
+  domain: '[depth, max_seq_len, batch_size] -> { [S_9[i, j, t] -> [__pet_test_0 =
+    1]] : 0 <= i < batch_size and 0 < j < depth and t >= 0 }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_9[i, j, t] -> x[] }'
+        reference: __pet_ref_29
+        read: 0
+        write: 1
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { [S_9[i, j, t] -> [i3]] -> output2[(i),
+          ((i3) : i3 >= 0), (-1 + j)] }'
+        reference: __pet_ref_31
+        read: 1
+        write: 0
+        arguments:
+        - type: access
+          index: '[depth, max_seq_len, batch_size] -> { S_9[i, j, t] -> k[] }'
+          reference: __pet_ref_30
+          read: 1
+          write: 0
+  arguments:
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_9[i, j, t] -> __pet_test_0[(i),
+      (j), (t)] }'
+    reference: __pet_ref_28
+    read: 1
+    write: 0
+- line: 47
+  domain: '[depth, max_seq_len, batch_size] -> { [S_10[i, j, t] -> [__pet_test_0 =
+    1, seq_len, k = -1 + seq_len]] : 0 <= i < batch_size and 0 <= j < depth and t
+    >= 0 and -2147483647 <= seq_len <= 2147483648 }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_10[i, j, t] -> h_prev[] }'
+        reference: __pet_ref_35
+        read: 0
+        write: 1
+      - type: double
+        value: 0
+        string: 0.
+  arguments:
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_10[i, j, t] -> __pet_test_0[(i),
+      (j), (t)] }'
+    reference: __pet_ref_32
+    read: 1
+    write: 0
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_10[i, j, t] -> seq_len[] }'
+    reference: __pet_ref_33
+    read: 1
+    write: 0
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_10[i, j, t] -> k[] }'
+    reference: __pet_ref_34
+    read: 1
+    write: 0
+- line: 49
+  domain: '[depth, max_seq_len, batch_size] -> { [S_11[i, j, t] -> [__pet_test_0 =
+    1, seq_len, k]] : 0 <= i < batch_size and 0 <= j < depth and t >= 0 and -2147483647
+    <= seq_len <= 2147483648 and (k <= -2 + seq_len or k >= seq_len) }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_11[i, j, t] -> h_prev[] }'
+        reference: __pet_ref_39
+        read: 0
+        write: 1
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { [S_11[i, j, t] -> [i3]] -> output2[(i),
+          (j), ((1 + i3) : i3 >= -1)] }'
+        reference: __pet_ref_41
+        read: 1
+        write: 0
+        arguments:
+        - type: access
+          index: '[depth, max_seq_len, batch_size] -> { S_11[i, j, t] -> k[] }'
+          reference: __pet_ref_40
+          read: 1
+          write: 0
+  arguments:
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_11[i, j, t] -> __pet_test_0[(i),
+      (j), (t)] }'
+    reference: __pet_ref_36
+    read: 1
+    write: 0
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_11[i, j, t] -> seq_len[] }'
+    reference: __pet_ref_37
+    read: 1
+    write: 0
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_11[i, j, t] -> k[] }'
+    reference: __pet_ref_38
+    read: 1
+    write: 0
+- line: 52
+  domain: '[depth, max_seq_len, batch_size] -> { [S_12[i, j, t] -> [__pet_test_0 =
+    1]] : 0 <= i < batch_size and 0 <= j < depth and t >= 0 }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { [S_12[i, j, t] -> [i3]] -> output2[(i),
+          ((i3) : i3 >= 0), (j)] }'
+        reference: __pet_ref_44
+        read: 0
+        write: 1
+        arguments:
+        - type: access
+          index: '[depth, max_seq_len, batch_size] -> { S_12[i, j, t] -> k[] }'
+          reference: __pet_ref_43
+          read: 1
+          write: 0
+      - type: call
+        name: cell
+        arguments:
+        - type: access
+          index: '[depth, max_seq_len, batch_size] -> { S_12[i, j, t] -> h_prev[]
+            }'
+          reference: __pet_ref_45
+          read: 1
+          write: 0
+        - type: access
+          index: '[depth, max_seq_len, batch_size] -> { S_12[i, j, t] -> x[] }'
+          reference: __pet_ref_46
+          read: 1
+          write: 0
+  arguments:
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_12[i, j, t] -> __pet_test_0[(i),
+      (j), (t)] }'
+    reference: __pet_ref_42
+    read: 1
+    write: 0
+- line: 39
+  domain: '[depth, max_seq_len, batch_size] -> { [S_13[i, j, t] -> [__pet_test_0 =
+    1]] : 0 <= i < batch_size and 0 <= j < depth and t >= 0 }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: +=
+      arguments:
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_13[i, j, t] -> k[] }'
+        reference: __pet_ref_48
+        read: 0
+        write: 1
+      - type: int
+        value: -1
+  arguments:
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_13[i, j, t] -> __pet_test_0[(i),
+      (j), (t)] }'
+    reference: __pet_ref_47
+    read: 1
+    write: 0
+- line: 39
+  domain: '[depth, max_seq_len, batch_size] -> { S_15[i, j] : 0 <= i < batch_size
+    and 0 <= j < depth }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: kill
+      arguments:
+      - type: access
+        killed: '[depth, max_seq_len, batch_size] -> { S_15[i, j] -> k[] }'
+        index: '[depth, max_seq_len, batch_size] -> { S_15[i, j] -> k[] }'
+        reference: __pet_ref_49
+        kill: 1
+- line: 56
+  domain: '[depth, max_seq_len, batch_size] -> { [S_16[i, j, n] -> [seq_len]] : 0
+    <= i < batch_size and 0 <= j < depth and n >= 0 and seq_len > n }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: =
+      arguments:
+      - type: access
+        index: '[depth, max_seq_len, batch_size] -> { S_16[i, j, n] -> output[(i),
+          (n), (j)] }'
+        reference: __pet_ref_51
+        read: 0
+        write: 1
+      - type: op
+        operation: +
+        arguments:
+        - type: access
+          index: '[depth, max_seq_len, batch_size] -> { S_16[i, j, n] -> output1[(i),
+            (n), (j)] }'
+          reference: __pet_ref_52
+          read: 1
+          write: 0
+        - type: access
+          index: '[depth, max_seq_len, batch_size] -> { [S_16[i, j, n] -> [i3]] ->
+            output2[(i), ((i3) : i3 >= 0), (j)] }'
+          reference: __pet_ref_55
+          read: 1
+          write: 0
+          arguments:
+          - type: op
+            operation: '-'
+            arguments:
+            - type: op
+              operation: '-'
+              arguments:
+              - type: access
+                index: '[depth, max_seq_len, batch_size] -> { S_16[i, j, n] -> seq_len[]
+                  }'
+                reference: __pet_ref_53
+                read: 1
+                write: 0
+              - type: int
+                value: 1
+            - type: access
+              index: '[depth, max_seq_len, batch_size] -> { S_16[i, j, n] -> [(n)]
+                }'
+              reference: __pet_ref_54
+              read: 1
+              write: 0
+  arguments:
+  - type: access
+    index: '[depth, max_seq_len, batch_size] -> { S_16[i, j, n] -> seq_len[] }'
+    reference: __pet_ref_50
+    read: 1
+    write: 0
+- line: -1
+  domain: '[depth, max_seq_len, batch_size] -> { S_17[] }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: kill
+      arguments:
+      - type: access
+        killed: '[depth, max_seq_len, batch_size] -> { S_17[] -> x[] }'
+        index: '[depth, max_seq_len, batch_size] -> { S_17[] -> x[] }'
+        reference: __pet_ref_56
+        kill: 1
+- line: -1
+  domain: '[depth, max_seq_len, batch_size] -> { S_18[] }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: kill
+      arguments:
+      - type: access
+        killed: '[depth, max_seq_len, batch_size] -> { S_18[] -> h_prev[] }'
+        index: '[depth, max_seq_len, batch_size] -> { S_18[] -> h_prev[] }'
+        reference: __pet_ref_57
+        kill: 1
+- line: -1
+  domain: '[depth, max_seq_len, batch_size] -> { S_19[] }'
+  body:
+    type: expression
+    expr:
+      type: op
+      operation: kill
+      arguments:
+      - type: access
+        killed: '[depth, max_seq_len, batch_size] -> { S_19[] -> seq_len[] }'
+        index: '[depth, max_seq_len, batch_size] -> { S_19[] -> seq_len[] }'
+        reference: __pet_ref_58
+        kill: 1
+implications:
+- satisfied: 1
+  extension: '[batch_size, depth] -> { __pet_test_0[i, j, t] -> __pet_test_0[i'' =
+    i, j'' = j, t''] : 0 <= i < batch_size and 0 <= j < depth and 0 <= t'' <= t }'
